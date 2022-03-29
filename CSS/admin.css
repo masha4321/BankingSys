@@ -16,6 +16,16 @@ a:hover {
   color: #ff00ff;
 }
 
+.href {
+  margin-top: 5px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: cursive;
+}
+
 #customers tr:nth-child(even) {
   background-color: #f2f2f2;
 }

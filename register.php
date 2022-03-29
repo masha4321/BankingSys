@@ -54,8 +54,7 @@ function formValidation()
             $error_log['email'] = 'Please enter your email';
         }
         if ($_POST['username'] != '' && $_POST['pwd'] != '' && $_POST['first_name'] != '' && $_POST['last_name'] != '' && $_POST['mobile'] != '' && $_POST['address'] != '' && $_POST['email'] != '') {
-            $error_log['success'] = '.';
-            //$error_log['success'] = '<p class="success">Thank you! You are now registered!</p>';
+            $error_log['success'] = '<p class="success">Thank you! You are now registered!</p>';
             $username = $pwd = $first_name = $last_name = $mobile = $address = $email = '';
         }
     }

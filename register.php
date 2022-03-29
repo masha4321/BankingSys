@@ -150,7 +150,7 @@ function InsertValue()
                     <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
                     <label for="pwd">Password<span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $first_name; ?>">
+                    <input type="password" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $first_name; ?>">
                     <p class="error-msg"><?php echo $error_log['pwd']; ?></p>
 
                     <label for="first_name">First name<span class="error-msg">*<span></label>
@@ -162,7 +162,7 @@ function InsertValue()
                     <p class="error-msg"><?php echo $error_log['last_name']; ?></p>
 
                     <label for="mobile">Mobile Number<span class="error-msg">*</label>
-                    <input type="text" class="input-div-nn" id="mobile" name="mobile" placeholder="mobile number" value="<?php echo $mobile; ?>">
+                    <input type="number" class="input-div-nn" id="mobile" name="mobile" placeholder="mobile number" value="<?php echo $mobile; ?>">
                     <p class="error-msg"><?php echo $error_log['mobile']; ?></p>
 
                     <label for="address">Address <span class="error-msg">*<span></label>

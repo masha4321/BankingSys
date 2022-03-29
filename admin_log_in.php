@@ -89,16 +89,16 @@ function InsertValue()
 <body>
     <div class="container">
         <div class="maindiv">
-            <div class="success">Welcome to the admin log in page!</div>
+            <h2 class="success">Welcome to the admin log in page!</h2>
             <div class="col-6">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
                     <label for="username">Username <span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="username" name="username" value="<?php echo $username; ?>">
+                    <input type="text" class="input-div-nn" id="username" name="username" placeholder="username" value="<?php echo $username; ?>">
                     <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
                     <label for="pwd">Password<span class="error-msg">*</label>
-                    <input type="password" class="input-div-nn" id="pwd" name="pwd" value="<?php echo $pwd; ?>">
+                    <input type="password" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $pwd; ?>">
                     <p class="error-msg"><?php echo $error_log['pwd']; ?></p>
 
                     <input type="submit" class="submit" value="Confirm">

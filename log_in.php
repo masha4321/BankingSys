@@ -99,7 +99,7 @@ function InsertValue()
                     <input type="text" class="input-div-nn" id="username" name="username" value="<?php echo $username; ?>">
                     <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
-                    <label for="pwd">Password<span class="error-msg">*</label>
+                    <label for="password">Password<span class="error-msg">*</label>
                     <input type="password" class="input-div-nn" id="pwd" name="pwd" value="<?php echo $pwd; ?>">
                     <p class="error-msg"><?php echo $error_log['pwd']; ?></p>
 

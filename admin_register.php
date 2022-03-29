@@ -96,7 +96,7 @@ function InsertValue()
 
                     <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
-                    <label for="pwd">Password<span class="error-msg">*</label>
+                    <label for="password">Password<span class="error-msg">*</label>
                     <input type="password" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $email; ?>">
                     <p class="error-msg"><?php echo $error_log['pwd']; ?></p>
 

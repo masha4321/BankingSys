@@ -114,9 +114,7 @@ function InsertValue()
         $options,
         $encryption_iv
     );
-    if ($conn->connect_error) {
-        die("Failed! " . $conn->connect_error);
-    }
+
     $sql = "insert into user_accounts (account_number,pin,first_name,last_name,mobile,address,email,username,pwd) values('$userAccountNumber','$userPIN','$_POST[first_name]', '$_POST[last_name]', '$_POST[mobile]', '$_POST[address]', '$_POST[email]','$_POST[username]','$encryption')";
     if ($conn->query($sql) === true) {
         echo '<p class="success">' . "Your account has been successfully created." . '</p>';

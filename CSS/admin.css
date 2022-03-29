@@ -1,23 +1,53 @@
-#customers tr:nth-child(even){background-color: #f2f2f2;}
-  
-  #customers tr:hover {background-color: #ddd;}
-  
-  #customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #3053b1;
-    color: white;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tr:hover {background-color: coral;}
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: #aeb0f8;
+  display: flex;
+  height: 100vh;
+  /*justify-content: center;*/
+  flex-direction: column;
+  /*align-items: center;*/
+}
+
+a:hover {
+  color: #ff00ff;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #051367;
+  color: #dff6ff;
+}
+form {
+  margin-bottom: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: white;
+}
+
+tr:hover {
+  background-color: coral;
+}

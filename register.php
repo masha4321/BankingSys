@@ -140,37 +140,37 @@ function InsertValue()
     <div class="container">
         <div class="maindiv">
             <div class="col-6">
-                <div class="success">Welcome to the registration form!</div>
+                <h2 class="success">Welcome to the registration form!</h2>
                 <br>
                 <?php echo $error_log['success']; ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
                     <label for="username">Username<span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="username" name="username" value="<?php echo $first_name; ?>">
+                    <input type="text" class="input-div-nn" id="username" name="username" placeholder="username" value="<?php echo $first_name; ?>">
                     <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
                     <label for="pwd">Password<span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="pwd" name="pwd" value="<?php echo $first_name; ?>">
+                    <input type="text" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $first_name; ?>">
                     <p class="error-msg"><?php echo $error_log['pwd']; ?></p>
 
                     <label for="first_name">First name<span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="first_name" name="first_name" value="<?php echo $first_name; ?>">
+                    <input type="text" class="input-div-nn" id="first_name" name="first_name" placeholder="first name" value="<?php echo $first_name; ?>">
                     <p class="error-msg"><?php echo $error_log['first_name']; ?></p>
 
                     <label for="last_name">Last name<span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="last_name" name="last_name" value="<?php echo $last_name; ?>">
+                    <input type="text" class="input-div-nn" id="last_name" name="last_name" placeholder="last name" value="<?php echo $last_name; ?>">
                     <p class="error-msg"><?php echo $error_log['last_name']; ?></p>
 
                     <label for="mobile">Mobile Number<span class="error-msg">*</label>
-                    <input type="text" class="input-div-nn" id="mobile" name="mobile" value="<?php echo $mobile; ?>">
+                    <input type="text" class="input-div-nn" id="mobile" name="mobile" placeholder="mobile number" value="<?php echo $mobile; ?>">
                     <p class="error-msg"><?php echo $error_log['mobile']; ?></p>
 
                     <label for="address">Address <span class="error-msg">*<span></label>
-                    <input type="text" class="input-div-nn" id="address" name="address" value="<?php echo $address; ?>">
+                    <input type="text" class="input-div-nn" id="address" name="address" placeholder="address" value="<?php echo $address; ?>">
                     <p class="error-msg"><?php echo $error_log['address']; ?></p>
 
                     <label for="email">Email<span class="error-msg">*</label>
-                    <input type="email" class="input-div-nn" id="email" name="email" value="<?php echo $email; ?>">
+                    <input type="email" class="input-div-nn" id="email" name="email" placeholder="email" value="<?php echo $email; ?>">
                     <p class="error-msg"><?php echo $error_log['email']; ?></p>
 
                     <input type="submit" class="submit" value="Send registration form">

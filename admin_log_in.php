@@ -34,8 +34,16 @@ function formValidation()
 }
 if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
     $error_log =  InsertValue();
-    $error_log['username'] = 'Enter a valid username';
-    $error_log['pwd'] = 'Enter a valid password';
+    if($_SESSION['num_login_fail'] == 3) {
+        $error_log['username'] = 'Please try again in a few minutes';
+        $error_log['pwd'] = 'Please try again in a few minutes';
+    } elseif ($_SESSION['num_login_fail'] > 0) {
+        $error_log['username'] = 'Enter a valid username';
+        $error_log['pwd'] = 'Enter a valid password';
+    } else {
+        $error_log['username'] = '';
+        $error_log['pwd'] = '';
+    }
     $name = $email = $mobile = $message = '';
 }
 
@@ -58,7 +66,6 @@ function InsertValue() {
     if(isset($_SESSION['num_login_fail'])) {
         if($_SESSION['num_login_fail'] == 3) {
             if(time() - $_SESSION['last_login_time'] < 10*60*60 ){
-                echo "Please try again in a few minutes";
                 return; 
             } else {
                 $_SESSION['num_login_fail'] = 0;
@@ -79,10 +86,8 @@ function InsertValue() {
                 header("Location: admin_dashboard.php");
                 die();
             } else {
-                echo $_SESSION['num_login_fail'];
                 $_SESSION['num_login_fail']++;
                 $_SESSION['last_login_time'] = time();
-                echo $_SESSION['num_login_fail'];
                 $error_log['pwd'] = 'Please verify the username and password.';
             }
         } else {

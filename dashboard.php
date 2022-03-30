@@ -84,7 +84,7 @@ function InsertValue($userID)
                 <td><?php echo $value['email']; ?></td>
                 <td><?php echo $value['reg_date']; ?></td>
                 <td><?php echo $value['id']; ?></td>
-                <td><a href="dashboard.php">Update</a>
+                <td><a href="edit.php">Update</a>
             </tr>
         <?php }
         ?>

@@ -179,7 +179,7 @@ function InsertBankingValue($userAccountNumber)
                 </div>
             </div>
         </div>
-        <a href="index.php" class="href">Log out</a> <br>
+        <a href="log_out.php" class="href">Log out</a> <br>
     </div>
 
 

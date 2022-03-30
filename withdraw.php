@@ -61,7 +61,7 @@ function InsertBankingValue($userAccountNumber)
 function InsertContactValue($userAccountNumber)
 {
     require "connect.php";
-    $sql = "select * from contact WHERE account_number = '{$userAccountNumber}'";
+    $sql = "select * from contacts WHERE account_number = '{$userAccountNumber}'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $array_result_contact = $result->fetch_all(MYSQLI_ASSOC);

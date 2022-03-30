@@ -61,7 +61,7 @@ function InsertBankingValue($userAccountNumber)
 function InsertContactValue($userAccountNumber)
 {
     require "connect.php";
-    $sql = "select * from contact WHERE account_number = '{$userAccountNumber}'";
+    $sql = "select * from contacts WHERE account_number = '{$userAccountNumber}'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $array_result_contact = $result->fetch_all(MYSQLI_ASSOC);
@@ -90,9 +90,26 @@ function InsertContactValue($userAccountNumber)
         <div class="maindiv">
             <div class="success">Withdraw Amount</div>
             <div class="col-6">
-                <?php echo $balance_log['balance'] ?>
-                <?php //echo $error_log['success'];
+
+                <?php
+                    foreach ($array_result as $value) {
+                        $userFirstName = $value['first_name'];
+                        $accountBalance = $value['balance'];
+                        $accountNumber = $value['account_number'];
+                    }
                 ?>
+
+                <p>
+                    <?php
+                    echo "Hi " . $userFirstName;
+                    echo '<br>';
+                    echo "Your account balance is " . $accountBalance . " $";
+                    echo '<br>';
+                    echo "Your account number is " . $accountNumber;
+                    ?>
+                </p>
+
+
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
                     <label for="amount">Amount <span class="error-msg"><span></label>

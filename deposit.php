@@ -15,7 +15,7 @@
             <div class="success">Deposit Amount</div>
             <div class="col-6">
                 <?php echo $balance_log['balance'] ?>
-                <?php //echo $error_log['sucess'];
+                <?php //echo $error_log['success'];
                 ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 

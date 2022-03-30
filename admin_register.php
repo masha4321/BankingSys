@@ -22,14 +22,14 @@ function formValidation()
             $error_log['pwd'] = 'Please enter your Email';
         }
         if ($_POST['username'] != '' && $_POST['pwd'] != '') {
-            $error_log['sucess'] = '<p class="success">Thank you we will contact you soon</p>';
+            $error_log['success'] = '<p class="success">Thank you we will contact you soon</p>';
             $name = '';
         }
     }
     return $error_log;
 }
 
-if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
+if (isset($error_log['success']) && !empty($error_log['success'])) {
     try {
         InsertValue();
         $name = $email = $mobile = $message = '';

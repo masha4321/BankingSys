@@ -23,14 +23,14 @@ function formValidation()
             $error_log['pwd'] = 'Please enter your Password';
         }
         if ($_POST['username'] != '' && $_POST['pwd'] != '') {
-            $error_log['sucess'] = '<p class="success">Thank you we will contact you soon</p>';
+            $error_log['success'] = '<p class="success">Thank you we will contact you soon</p>';
             $name = '';
         }
     }
 
     return $error_log;
 }
-if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
+if (isset($error_log['success']) && !empty($error_log['success'])) {
     $error_log =  InsertValue();
     if($_SESSION['num_login_fail'] == 3) {
         $error_log['username'] = 'Please try again in a few minutes';
@@ -114,7 +114,7 @@ function InsertValue()
             <div class="success">Welcome to the log in page!</div>
             <div class="col-6">
 
-                <?php //echo $error_log['sucess'];
+                <?php //echo $error_log['success'];
                 ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 

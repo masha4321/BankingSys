@@ -96,7 +96,7 @@ $error_log = formValidation();
 //requirement was to the get the error message
 function formValidation()
 {
-    $error_log['name'] = $error_log['email'] = $error_log['mobile'] = $error_log['message'] = $error_log['sucess'] = '';
+    $error_log['name'] = $error_log['email'] = $error_log['mobile'] = $error_log['message'] = $error_log['success'] = '';
 
     if (isset($_POST) && !empty($_POST)) {
 
@@ -116,14 +116,14 @@ function formValidation()
         }
         if ($_POST['name'] != '' && $_POST['email'] != '' && $_POST['mobile'] != '' && $_POST['message'] != '') {
             UpdateData();
-            $error_log['sucess'] = '<p class="success">Information Updated</p>';
+            $error_log['success'] = '<p class="success">Information Updated</p>';
             $name = '';
         }
     }
 
     return $error_log;
 }
-if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
+if (isset($error_log['success']) && !empty($error_log['success'])) {
     // $name = $email = $mobile = $message = '';
 }
 // print_r($array_result);
@@ -146,7 +146,7 @@ if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
         <div class="maindiv">
             <div class="col-6">
 
-                <?php echo $error_log['sucess']; ?>
+                <?php echo $error_log['success']; ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <label for="name">Name <span class="error-msg">*<span></label>
                     <input type="text" class="input-div-nn" id="name" name="name" value="<?php echo $name == '' ? $array_result['firstname'] : $name; ?>">

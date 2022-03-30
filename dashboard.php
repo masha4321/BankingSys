@@ -4,6 +4,7 @@ $timeout = 600;
 ini_set("session.gc_maxlifetime", $timeout);
 ini_set("session.cookie_lifetime", $timeout);
 session_start();
+
 $s_name = session_name();
 if (isset($_COOKIE[$s_name])) {
     setcookie($s_name, $_COOKIE[$s_name], time() + $timeout, '/');
@@ -80,6 +81,7 @@ function InsertBankingValue($userAccountNumber)
         $accountBalance = $value['balance'];
         $accountNumber = $value['account_number'];
     }
+
     ?>
 
     <p>
@@ -88,7 +90,10 @@ function InsertBankingValue($userAccountNumber)
         echo '<br>';
         echo "Your account balance is " . $accountBalance . " $";
         echo '<br>';
-        echo "Your account number is " . $accountNumber;
+        echo "Your account number is ".$accountNumber;
+
+        $_SESSION["acc_num"] = $accountNumber;
+        $_SESSION["current_balance"] = $accountBalance;
         ?>
     </p>
 

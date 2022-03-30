@@ -182,21 +182,6 @@ function InsertBankingValue($userAccountNumber)
         <a href="log_out.php" class="href">Log out</a> <br>
     </div>
 
-    <?php
-    foreach ($array_result as $value) { ?>
-        <tr>
-            <td><?php echo $value['first_name']; ?></td>
-            <td><?php echo $value['last_name']; ?></td>
-            <td><?php echo $value['mobile']; ?></td>
-            <td><?php echo $value['address']; ?></td>
-            <td><?php echo $value['email']; ?></td>
-            <td><?php echo $value['reg_date']; ?></td>
-            <td><?php echo $value['id']; ?></td>
-            <td><a href="edit.php">Update</a>
-        </tr>
-    <?php }
-    ?>
-
 </body>
 
 </html>

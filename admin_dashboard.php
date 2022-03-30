@@ -79,7 +79,7 @@ function InsertValue()
         <td><?php echo $value['email']; ?></td>
         <td><?php echo $value['reg_date']; ?></td>
         <td><?php echo $value['id']; ?></td>
-        <td><a href="edit.php">Edit</a> | <a href="edit.php">Delete</a></td>
+        <td><a href="edit.php">Edit</a> | <a href="delete.php">Delete</a></td>
       </tr>
     <?php } ?>
 

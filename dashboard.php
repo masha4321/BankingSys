@@ -94,7 +94,6 @@ function InsertBankingValue($userAccountNumber)
 
         $_SESSION["acc_num"] = $accountNumber;
         $_SESSION["current_balance"] = $accountBalance;
-        echo "Your account number is " . $accountNumber;
         ?>
     </p>
 

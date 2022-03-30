@@ -73,3 +73,7 @@ div {
   color: #dff6ff;
   font-family: cursive;
 }
+
+a:hover {
+  color: #ff00ff;
+}

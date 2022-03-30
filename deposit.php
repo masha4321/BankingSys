@@ -28,6 +28,8 @@ foreach ($array_result as $value) {
 
 $array_result_banking = InsertBankingValue($userAccountNumber);
 
+$array_result_contact = InsertContactValue($userAccountNumber);
+
 function InsertValue($userID)
 {
     require "connect.php";
@@ -54,6 +56,20 @@ function InsertBankingValue($userAccountNumber)
     }
     $conn->close();
     return $array_result_banking;
+}
+
+function InsertContactValue($userAccountNumber)
+{
+    require "connect.php";
+    $sql = "select * from contact WHERE account_number = '{$userAccountNumber}'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $array_result_contact = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "error" . $conn->connect_error;
+    }
+    $conn->close();
+    return $array_result_contact;
 }
 
 ?>

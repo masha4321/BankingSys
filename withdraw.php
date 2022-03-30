@@ -19,7 +19,6 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-?>
 $timeout = 600;
 
 ini_set("session.gc_maxlifetime", $timeout);

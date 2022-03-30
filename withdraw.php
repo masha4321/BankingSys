@@ -1,3 +1,25 @@
+<?php
+include 'connect.php';
+
+session_start();
+//echo $_SESSION["acc_num"];
+//echo $_SESSION["current_balance"]; 
+$updated_balance = $_SESSION["current_balance"] - $_POST['mywithdrawal'];
+
+
+
+$sql = "UPDATE user_accounts SET balance= '$updated_balance' WHERE account_number = '{$_SESSION["acc_num"]}'";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Record updated successfully";
+    $_SESSION["current_balance"] = $updated_balance;
+} else {
+    echo "Error updating record: " . $conn->error;
+}
+
+$conn->close();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +43,7 @@
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
                     <label for="amount">Amount <span class="error-msg"><span></label>
-                    <input type="text" class="input-div-nn" id="amount" name="amount" value="<?php echo $amount; ?>">
+                    <input type="text" class="input-div-nn" id="amount" name="mywithdrawal" value="<?php echo $amount; ?>">
                     <!-- <p class="error-msg"><?php echo $error_log['amount']; ?></p> -->
 
                     <input type="submit" class="submit" value="Confirm">

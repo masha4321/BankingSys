@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$_SESSION['num_login_fail']=0;
+
 $username = $pwd  = '';
 if (!empty($_POST)) {
     if ($_POST['username'] != '') {
@@ -58,14 +61,28 @@ function InsertValue()
             $options,
             $decryption_iv
         );
-        if ($_POST['pwd'] == $decryption) {
-            session_start();
-            $_SESSION['user_id'] = $_POST['username'];
-            header("Location: admin_dashboard.php");
-            die();
-        } else {
-            $error_log['pwd'] = 'Please verify the username and password.';
+
+        if(isset($_SESSION['num_login_fail'])) {
+            if($_SESSION['num_login_fail'] == 3) {
+                if(time() - $_SESSION['last_login_time'] < 10*60*60 )  {
+                    echo "Try again later";
+                    return; 
+                } 
+            } else { 
+                if ($_POST['pwd'] == $decryption) {
+                    $_SESSION['num_login_fail'] = 0;
+                    $_SESSION['user_id'] = $_POST['username'];
+                    header("Location: admin_dashboard.php");
+                    die();
+                } else {
+                    $_SESSION['num_login_fail'] ++;
+                    $_SESSION['last_login_time'] = time();
+                    $error_log['pwd'] = 'Please verify the username and password.';
+                }   
+            }
         }
+
+
     } else {
         $error_log['pwd'] = 'Please verify the username and password.';
     }

@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(isset($_SESSION['num_login_fail'])==false) {
+    $_SESSION['num_login_fail']=0;
+}
 
 $username = $pwd  = '';
 if (!empty($_POST)) {

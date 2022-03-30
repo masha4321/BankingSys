@@ -1,9 +1,4 @@
-    <?php 
-        session_start();
-        session_destroy();
-    ?>
-    
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -27,5 +22,5 @@
             </div>
         </div>
     </body>
-    </html>
+</html>
 

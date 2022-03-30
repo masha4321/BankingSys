@@ -67,10 +67,10 @@ function InsertBankingValue($userAccountNumber)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="css/admin.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 
 <body>
@@ -88,12 +88,13 @@ function InsertBankingValue($userAccountNumber)
         <?php
         echo "Hi " . $userFirstName;
         echo '<br>';
-        echo "Your account balance is ".$accountBalance." $";
+        echo "Your account balance is " . $accountBalance . " $";
         echo '<br>';
         echo "Your account number is ".$accountNumber;
 
         $_SESSION["acc_num"] = $accountNumber;
         $_SESSION["current_balance"] = $accountBalance;
+        echo "Your account number is " . $accountNumber;
         ?>
     </p>
 
@@ -124,7 +125,7 @@ function InsertBankingValue($userAccountNumber)
                                 <td><?php echo $value['mobile']; ?></td>
                                 <td><?php echo $value['address']; ?></td>
                                 <td><?php echo $value['email']; ?></td>
-                                <td><a href="dashboard.php">Update</a>
+                                <td><a href="edit.php">Update</a>
                             </tr>
                         <?php }
                         ?>
@@ -143,7 +144,7 @@ function InsertBankingValue($userAccountNumber)
                 <div class="accordion-body">
 
 
-                <table id="customers">
+                    <table id="customers">
                         <tr>
                             <th>Type of transaction</th>
                             <th>Amount</th>
@@ -184,9 +185,8 @@ function InsertBankingValue($userAccountNumber)
                 </div>
             </div>
         </div>
-        <a href="index.php" class="href">Log out</a> <br>
+        <a href="log_out.php" class="href">Log out</a> <br>
     </div>
-
 
 </body>
 

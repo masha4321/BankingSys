@@ -1,3 +1,79 @@
+<?php
+$timeout = 600;
+
+ini_set("session.gc_maxlifetime", $timeout);
+ini_set("session.cookie_lifetime", $timeout);
+session_start();
+$s_name = session_name();
+if (isset($_COOKIE[$s_name])) {
+    setcookie($s_name, $_COOKIE[$s_name], time() + $timeout, '/');
+} else {
+    header("Location: session_error.php");
+    die();
+}
+
+if (isset($_SESSION['user_id'])) {
+    $userID =  $_SESSION['user_id'];
+    $array_result = InsertValue($userID);
+} else {
+    header("Location: session_error.php");
+    die();
+}
+
+$array_result = InsertValue($userID);
+
+foreach ($array_result as $value) {
+    $userAccountNumber = $value['account_number'];
+}
+
+$array_result_banking = InsertBankingValue($userAccountNumber);
+
+$array_result_contact = InsertContactValue($userAccountNumber);
+
+function InsertValue($userID)
+{
+    require "connect.php";
+    $sql = "select * from user_accounts WHERE username = '{$userID}'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $array_result = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "error" . $conn->connect_error;
+    }
+    $conn->close();
+    return $array_result;
+}
+
+function InsertBankingValue($userAccountNumber)
+{
+    require "connect.php";
+    $sql = "select * from transactions WHERE account_number = '{$userAccountNumber}'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $array_result_banking = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "error" . $conn->connect_error;
+    }
+    $conn->close();
+    return $array_result_banking;
+}
+
+function InsertContactValue($userAccountNumber)
+{
+    require "connect.php";
+    $sql = "select * from contacts WHERE account_number = '{$userAccountNumber}'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $array_result_contact = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "error" . $conn->connect_error;
+    }
+    $conn->close();
+    return $array_result_contact;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,9 +90,26 @@
         <div class="maindiv">
             <div class="success">Withdraw Amount</div>
             <div class="col-6">
-                <?php echo $balance_log['balance'] ?>
-                <?php //echo $error_log['success'];
+
+                <?php
+                    foreach ($array_result as $value) {
+                        $userFirstName = $value['first_name'];
+                        $accountBalance = $value['balance'];
+                        $accountNumber = $value['account_number'];
+                    }
                 ?>
+
+                <p>
+                    <?php
+                    echo "Hi " . $userFirstName;
+                    echo '<br>';
+                    echo "Your account balance is " . $accountBalance . " $";
+                    echo '<br>';
+                    echo "Your account number is " . $accountNumber;
+                    ?>
+                </p>
+
+
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
                     <label for="amount">Amount <span class="error-msg"><span></label>

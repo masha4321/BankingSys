@@ -55,19 +55,22 @@ function InsertValue($userID)
     }
     ?>
 
-    <?php
-    echo "Hi " . $userFirstName;
-    ?>
+    <p>
+        <?php
+        echo "Hi " . $userFirstName;
+        ?>
+    </p>
+
 
     <table id="customers">
         <tr>
             <th>First name</th>
             <th>Last name</th>
             <th>Mobile</th>
-            <th>address</th>
+            <th>Address</th>
             <th>Email</th>
             <th>Registration date</th>
-            <th>id</th>
+            <th>Id</th>
             <th>Edit</th>
         </tr>
 

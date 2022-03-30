@@ -1,7 +1,7 @@
 <?php
-
 session_start();
-$_SESSION['num_login_fail']=0;
+
+
 
 $username = $pwd  = '';
 if (!empty($_POST)) {
@@ -34,11 +34,12 @@ function formValidation()
 }
 if (isset($error_log['sucess']) && !empty($error_log['sucess'])) {
     $error_log =  InsertValue();
+    $error_log['username'] = 'Enter a valid username';
+    $error_log['pwd'] = 'Enter a valid password';
     $name = $email = $mobile = $message = '';
 }
 
-function InsertValue()
-{
+function InsertValue() {
     $error_log = array();
     $error_log['username'] = $error_log['pwd']   = '';
 
@@ -52,43 +53,47 @@ function InsertValue()
 
     $sql = "select * from admin where username = '$_POST[username]'";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $decryption = openssl_decrypt(
-            $row['pwd'],
-            $ciphering,
-            $decryption_key,
-            $options,
-            $decryption_iv
-        );
 
-        if(isset($_SESSION['num_login_fail'])) {
-            if($_SESSION['num_login_fail'] == 3) {
-                if(time() - $_SESSION['last_login_time'] < 10*60*60 )  {
-                    echo "Try again later";
-                    return; 
-                } 
-            } else { 
-                if ($_POST['pwd'] == $decryption) {
-                    $_SESSION['num_login_fail'] = 0;
-                    $_SESSION['user_id'] = $_POST['username'];
-                    header("Location: admin_dashboard.php");
-                    die();
-                } else {
-                    $_SESSION['num_login_fail'] ++;
-                    $_SESSION['last_login_time'] = time();
-                    $error_log['pwd'] = 'Please verify the username and password.';
-                }   
+
+    if(isset($_SESSION['num_login_fail'])) {
+        if($_SESSION['num_login_fail'] == 3) {
+            if(time() - $_SESSION['last_login_time'] < 10*60*60 ){
+                echo "Please try again in a few minutes";
+                return; 
+            } else {
+                $_SESSION['num_login_fail'] = 0;
             }
+        }      
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $decryption = openssl_decrypt(
+                $row['pwd'],
+                $ciphering,
+                $decryption_key,
+                $options,
+                $decryption_iv
+            );
+            if ($_POST['pwd'] == $decryption) {
+                $_SESSION['num_login_fail'] = 0;
+                $_SESSION['user_id'] = $_POST['username'];
+                header("Location: admin_dashboard.php");
+                die();
+            } else {
+                echo $_SESSION['num_login_fail'];
+                $_SESSION['num_login_fail']++;
+                $_SESSION['last_login_time'] = time();
+                echo $_SESSION['num_login_fail'];
+                $error_log['pwd'] = 'Please verify the username and password.';
+            }
+        } else {
+            $error_log['pwd'] = 'Please verify the username and password.';
         }
-
-
-    } else {
-        $error_log['pwd'] = 'Please verify the username and password.';
     }
     $conn->close();
     return $error_log;
 }
+
+
 ?>
 
 

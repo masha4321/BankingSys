@@ -1,23 +1,4 @@
 <?php
-include 'connect.php';
-
-session_start();
-//echo $_SESSION["acc_num"];
-//echo $_SESSION["current_balance"]; 
-$updated_balance = $_SESSION["current_balance"] + $_POST['mydeposit'];
-
-
-
-$sql = "UPDATE user_accounts SET balance= '$updated_balance' WHERE account_number = '{$_SESSION["acc_num"]}'";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Record updated successfully";
-    $_SESSION["current_balance"] = $updated_balance;
-} else {
-    echo "Error updating record: " . $conn->error;
-}
-
-$conn->close();
 $timeout = 600;
 
 ini_set("session.gc_maxlifetime", $timeout);
@@ -33,23 +14,24 @@ if (isset($_COOKIE[$s_name])) {
 
 if (isset($_SESSION['user_id'])) {
     $userID =  $_SESSION['user_id'];
-    $array_result = InsertValue($userID);
+    $array_result = GetValue($userID);
 } else {
     header("Location: session_error.php");
     die();
 }
 
-$array_result = InsertValue($userID);
+$array_result = GetValue($userID);
 
 foreach ($array_result as $value) {
-    $userAccountNumber = $value['account_number'];
+    $accountNumber = $value['account_number'];
+    $_SESSION["current_balance"] = $value['balance'];
 }
 
-$array_result_banking = InsertBankingValue($userAccountNumber);
+$array_result_banking = InsertBankingValue($accountNumber);
 
-$array_result_contact = InsertContactValue($userAccountNumber);
+$array_result_contact = InsertContactValue($accountNumber);
 
-function InsertValue($userID)
+function GetValue($userID)
 {
     require "connect.php";
     $sql = "select * from user_accounts WHERE username = '{$userID}'";
@@ -63,10 +45,10 @@ function InsertValue($userID)
     return $array_result;
 }
 
-function InsertBankingValue($userAccountNumber)
+function InsertBankingValue($accountNumber)
 {
     require "connect.php";
-    $sql = "select * from transactions WHERE account_number = '{$userAccountNumber}'";
+    $sql = "select * from transactions WHERE account_number = '{$accountNumber}'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $array_result_banking = $result->fetch_all(MYSQLI_ASSOC);
@@ -77,10 +59,10 @@ function InsertBankingValue($userAccountNumber)
     return $array_result_banking;
 }
 
-function InsertContactValue($userAccountNumber)
+function InsertContactValue($accountNumber)
 {
     require "connect.php";
-    $sql = "select * from contacts WHERE account_number = '{$userAccountNumber}'";
+    $sql = "select * from contacts WHERE account_number  = '{$accountNumber}'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $array_result_contact = $result->fetch_all(MYSQLI_ASSOC);
@@ -91,6 +73,54 @@ function InsertContactValue($userAccountNumber)
     return $array_result_contact;
 }
 
+$amount = '';
+if (!empty($_POST)) {
+    if ($_POST['amount'] != '') {
+        $amount = $_POST['amount'];
+    }
+
+}
+
+$error_log = array();
+$error_log = formValidation();
+function formValidation()
+{
+    $error_log['amount'] = $error_log['account_traded_with'] = $error_log['transaction_informations'] = $error_log['success'] = '';
+    if (isset($_POST) && !empty($_POST)) {
+        if (trim($_POST['amount']) == '') {
+            $error_log['amount'] = 'Please enter your amount';
+        }
+        if ($_POST['amount'] != '') {
+            $error_log['success'] = '<p class="success">Thank you! The money has been deposited.</p>';
+            $amount = $account_traded_with = $transaction_informations = '';
+        }
+    }
+    return $error_log;
+}
+if (isset($error_log['success']) && !empty($error_log['success'])) {
+    try {
+        InsertValue($accountNumber);
+        $amount = $account_traded_with = $transaction_informations = '';
+    } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+}
+
+function InsertValue($accountNumber)
+{
+    require "connect.php";
+    $transaction_informations="User deposited ".$_POST['amount']." in his own account";
+    $transactionType = "Deposit";
+    $updated_balance = $_SESSION["current_balance"] + $_POST['amount'];
+    $sql = "insert into transactions (account_number,type,amount,transaction_informations) values('$accountNumber','$transactionType','$_POST[amount]','$transaction_informations');
+    update user_accounts set balance = '$updated_balance' where id ='$accountNumber'";
+    if ($conn->query($sql) === true) {
+
+    } else {
+        echo "error" . $conn->connect_error;
+    }
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -99,31 +129,45 @@ function InsertContactValue($userAccountNumber)
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit</title>
+    <meta first_name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
     <div class="container">
         <div class="maindiv">
-            <div class="success">Deposit Amount</div>
             <div class="col-6">
-                <?php echo $balance_log['balance'] ?>
-                <?php //echo $error_log['success'];
+                <h2 class="success">Transfer</h2>
+                <br>
+                <?php echo $error_log['success']; ?>
+                                
+                <?php
+                    foreach ($array_result as $value) {
+                        $userFirstName = $value['first_name'];
+                        $accountBalance = $value['balance'];
+                        $accountNumber = $value['account_number'];
+                    }
                 ?>
+
+                <p>
+                    <?php
+                        echo "Account balance: " . $accountBalance . " $";
+                    ?>
+                </p>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
-                    <label for="amount">Amount <span class="error-msg"><span></label>
-                    <input type="text" class="input-div-nn" id="amount" name="mydeposit" value="<?php echo $amount; ?>">
-                    <!-- <p class="error-msg"><?php echo $error_log['amount']; ?></p> -->
+                    <label for="amount">Amount<span class="error-msg">*</label>
+                    <input type="number" class="input-div-nn" id="amount" name="amount" placeholder="Please enter the amount you wish to deposit" value="<?php echo $amount; ?>">
+                    <p class="error-msg"><?php echo $error_log['amount']; ?></p>
 
                     <input type="submit" class="submit" value="Confirm">
 
-                    <a href="profile.php" class="href">Cancel</a>
-                    <br>
-                    <a href="index.php" class="href">Logout</a>
+                    <div class="col-6">
                 </form>
+            <a href="dashboard.php" class="href">Back</a>
+            <br>
+            <a href="log_out.php" class="href">Log out</a>
             </div>
             <div class="col-6"></div>
         </div>

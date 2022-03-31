@@ -8,17 +8,11 @@ if (!isset($_SESSION)) {
 //Import session variables
 if (isset($_SESSION['user_id'])) {
     $userID =  $_SESSION['user_id'];
-} else {
-    header("Location: session_error.php");
-    die();
 }
 
 //Initialize variables
-$username = $pwd = $first_name = $last_name = $mobile = $address = $email = '';
+$pwd = $first_name = $last_name = $mobile = $address = $email = '';
 if (!empty($_POST)) {
-    if ($_POST['username'] != '') {
-        $username = $_POST['username'];
-    }
     if ($_POST['pwd'] != '') {
         $pwd = $_POST['pwd'];
     }
@@ -44,11 +38,8 @@ $error_log = array();
 $error_log = formValidation();
 function formValidation()
 {
-    $error_log['username'] = $error_log['pwd'] = $error_log['first_name'] = $error_log['last_name'] = $error_log['mobile'] = $error_log['address'] = $error_log['email'] = $error_log['success'] = '';
+    $error_log['pwd'] = $error_log['first_name'] = $error_log['last_name'] = $error_log['mobile'] = $error_log['address'] = $error_log['email'] = $error_log['success'] = '';
     if (isset($_POST) && !empty($_POST)) {
-        if (trim($_POST['username']) == '') {
-            $error_log['username'] = 'Please enter your username';
-        }
         if (trim($_POST['pwd']) == '') {
             $error_log['pwd'] = 'Please enter your password';
         }
@@ -67,11 +58,12 @@ function formValidation()
         if (trim($_POST['email']) == '') {
             $error_log['email'] = 'Please enter your email';
         }
-        if ($_POST['username'] != '' && $_POST['pwd'] != '' && $_POST['first_name'] != '' && $_POST['last_name'] != '' && $_POST['mobile'] != '' && $_POST['address'] != '' && $_POST['email'] != '') {
+        if ($_POST['pwd'] != '' && $_POST['first_name'] != '' && $_POST['last_name'] != '' && $_POST['mobile'] != '' && $_POST['address'] != '' && $_POST['email'] != '') {
             $error_log['success'] = '<p class="success">You have been updated successfully!</p>';
             $username = $pwd = $first_name = $last_name = $mobile = $address = $email = '';
         }
     }
+
     return $error_log;
 }
 
@@ -79,7 +71,7 @@ function formValidation()
 if (isset($error_log['success']) && !empty($error_log['success'])) {
     try {
         UpdateData();
-        $username = $pwd = $first_name = $last_name = $mobile = $address = $email = '';
+        $pwd = $first_name = $last_name = $mobile = $address = $email = '';
     } catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
@@ -89,7 +81,11 @@ if (isset($error_log['success']) && !empty($error_log['success'])) {
 function UpdateData()
 {
     require "connect.php";
-    $username = mysqli_real_escape_string($conn, $_POST["username"]);
+
+    if (isset($_SESSION['user_id'])) {
+        $userID =  $_SESSION['user_id'];
+    }
+
     $pwd = mysqli_real_escape_string($conn, $_POST["pwd"]);
     $first_name = mysqli_real_escape_string($conn, $_POST["first_name"]);
     $last_name = mysqli_real_escape_string($conn, $_POST["last_name"]);
@@ -98,14 +94,13 @@ function UpdateData()
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
 
     $sql = "UPDATE user_accounts 
-            SET username = '$username',
-                    pwd = '$pwd',
+            SET      pwd = '$pwd',
                     first_name = '$first_name',
                     last_name = '$last_name',
                     mobile = '$mobile',
                     address = '$address',
                     email = '$email'
-            where id =" . $_SESSION['user_id'];
+            where username = '$userID'";
 
     if ($conn->query($sql) === true) {
     } else {
@@ -138,10 +133,6 @@ function UpdateData()
                 <br>
                 <?php echo $error_log['success']; ?>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-
-                    <label for="username">Username<span class="error-msg"><span></label>
-                    <input type="text" class="input-div-nn" id="username" name="username" placeholder="username" value="<?php echo $username; ?>">
-                    <p class="error-msg"><?php echo $error_log['username']; ?></p>
 
                     <label for="password">Password<span class="error-msg"><span></label>
                     <input type="password" class="input-div-nn" id="pwd" name="pwd" placeholder="password" value="<?php echo $pwd; ?>">
